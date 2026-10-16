@@ -1,0 +1,61 @@
+# نسخة الآيفون — XcodeGen يصنع منها AbuAzz.xcodeproj على حاسوب Mac (GitHub Actions).
+# لا يُكتب ملف xcodeproj باليد: هذا الملف وحده هو المصدر.
+name: AbuAzz
+options:
+  bundleIdPrefix: com.abuazz
+  deploymentTarget:
+    iOS: "15.0"
+targets:
+  AbuAzz:
+    type: application
+    platform: iOS
+    sources:
+      - AbuAzz
+    info:
+      path: AbuAzz/Info.plist
+      properties:
+        CFBundleDisplayName: "ابو عزّ"
+        CFBundleShortVersionString: "1.12.36"
+        CFBundleVersion: "11236"
+        CFBundleDevelopmentRegion: ar
+        LSRequiresIPhoneOS: true
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+          UISceneConfigurations:
+            UIWindowSceneSessionRoleApplication:
+              - UISceneConfigurationName: Default
+                UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
+        # النطاقات التي يعمل عليها البرنامج: بها وحدها يعمل الـ Service Worker داخل
+        # التطبيق، فيفتح بلا إنترنت كما يفتح من الشاشة الرئيسية في Safari.
+        WKAppBoundDomains:
+          - madeed-clinic.web.app
+          - madeed-clinic.firebaseapp.com
+        NSCameraUsageDescription: "لتصوير المريض والأشعة وإرفاقها بالكيسشيت"
+        NSPhotoLibraryUsageDescription: "لاختيار صور من المعرض وإرفاقها بالكيسشيت"
+        NSPhotoLibraryAddUsageDescription: "لحفظ صور الكيسشيت في المعرض"
+        NSMicrophoneUsageDescription: "للإملاء الصوتي في الملاحظات"
+        NSContactsUsageDescription: "لإضافة المريض إلى جهات الاتصال"
+        ITSAppUsesNonExemptEncryption: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.abuazz.clinic
+        PRODUCT_NAME: AbuAzz
+        MARKETING_VERSION: "1.12.36"
+        CURRENT_PROJECT_VERSION: "11236"
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "5.0"
+        CODE_SIGNING_ALLOWED: "NO"
+        CODE_SIGNING_REQUIRED: "NO"
+        CODE_SIGN_IDENTITY: ""
+        DEVELOPMENT_TEAM: ""
