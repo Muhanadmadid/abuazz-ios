@@ -22,9 +22,18 @@ jobs:
 
       - name: Build (unsigned)
         run: |
+          xcodebuild -version
+          set +e
           xcodebuild -project AbuAzz.xcodeproj -scheme AbuAzz -configuration Release \
             -sdk iphoneos -destination 'generic/platform=iOS' -derivedDataPath build \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" build > build.log 2>&1
+          RC=$?
+          tail -n 40 build.log
+          if [ $RC -ne 0 ]; then
+            grep -E "error:|fatal|not installed|Unable" build.log | head -8 | while IFS= read -r l; do echo "::error::${l:0:400}"; done
+            echo "::error::xcodebuild exit $RC; $(xcodebuild -version | tr '\n' ' ')"
+            exit $RC
+          fi
 
       - name: Package the IPA
         run: |
