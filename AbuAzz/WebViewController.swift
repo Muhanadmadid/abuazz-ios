@@ -56,7 +56,21 @@ final class WebViewController: UIViewController, WKNavigationDelegate, WKUIDeleg
     web.backgroundColor = bg
     web.scrollView.backgroundColor = bg
     web.allowsBackForwardNavigationGestures = false
-    view = web
+    // الصفحة تُحسب ارتفاعها بـ 100vh: نحصر الـ WebView داخل المنطقة الآمنة (بين شريط الحالة
+    // ومؤشر الرجوع) كي لا يختبئ الشريط السفلي تحتها، ونمنع الإزاحة التلقائية للمحتوى.
+    web.scrollView.contentInsetAdjustmentBehavior = .never
+    let root = UIView()
+    root.backgroundColor = bg
+    web.translatesAutoresizingMaskIntoConstraints = false
+    root.addSubview(web)
+    let g = root.safeAreaLayoutGuide
+    NSLayoutConstraint.activate([
+      web.topAnchor.constraint(equalTo: g.topAnchor),
+      web.bottomAnchor.constraint(equalTo: g.bottomAnchor),
+      web.leadingAnchor.constraint(equalTo: g.leadingAnchor),
+      web.trailingAnchor.constraint(equalTo: g.trailingAnchor)
+    ])
+    view = root
   }
 
   override func viewDidLoad() {
